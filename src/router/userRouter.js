@@ -3,8 +3,12 @@ const router = express.Router();
 
 const UserController=require('../controller/userController');
 
-router.post('/create', async(req,res)=>{
+router.post('/register', async(req,res)=>{
     await UserController.register(req,res)
+});
+
+router.post('/login', async(req,res)=>{
+    await UserController.sign(req,res)
 });
 
 router.get('/all', async(req,res)=>{

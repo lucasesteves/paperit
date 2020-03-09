@@ -1,15 +1,7 @@
 const {Schema,model}=require('mongoose');
 
-const UserSchema=new Schema({
-    name:{
-        type:String,
-        require:true
-    },
-    email:{
-        type:String,
-        require:true
-    },
-    password:{
+const PracticeSchema=new Schema({
+    userId:{
         type:String,
         require:true
     },
@@ -21,6 +13,14 @@ const UserSchema=new Schema({
         type:String,
         require:true
     },
+    questions:{
+        type:Object,
+        require:true
+    },
+    score:{
+        type:Number,
+        default:0
+    },
     createdAt:{
         type:Date, 
         default:Date.now
@@ -28,7 +28,7 @@ const UserSchema=new Schema({
     
 })
 
-UserSchema.pre('save',next=>{
+PracticeSchema.pre('save',next=>{
     let now=new Date();
     if(this.createdAt==null){
         this.createdAt=now;
@@ -36,4 +36,4 @@ UserSchema.pre('save',next=>{
     next();
 });
 
-module.exports=model('User',UserSchema)
+module.exports=model('Practice',PracticeSchema)
