@@ -21,30 +21,44 @@ class PracticeController {
             let { id } = req.body;
             const user = await User.find(mongoose.Types.ObjectId(id));
             const {currentLang,wishLang}=user[0]
-            const userId=user[0].id
 
-            const questions=await Words.aggregate([{$sample:{size:10}}])
-            await Practice.create({
-                    userId,
-                    currentLang,
-                    wishLang,
-                    questions,
-
-            }); 
-            return res.status(200).send({ msg:'Teste criado!'}) 
+            const questions=await Words.aggregate([{$sample:{size:10}},{$project:{_id:0}}])
+            const obj={
+                userId:id,
+                currentLang:currentLang,
+                wishLang:wishLang,
+                questions:questions
+            }
+            return res.status(200).send({ obj })
         }catch(err) {
             return res.status(500).send(err.message);
         }
     };
 
-    async updatePractice(req, res) {
+    compareResult(questions, awnsers, wishLang) {
+        let score = 0;
+        for(let quest in questions) {
+           if(questions[quest][wishLang] === awnsers[quest][wishLang]) {
+              score++
+           }
+        }
+        return score;
+     }
+
+    async savePractice(req, res) {
         try {
-            const { id } = req.params;
-            const { user }  = req.body;
-            if (!id) { return res.status(200).send('Não foi passado o Id do usuário'); }
-            const userUpdated = await User.findOneAndUpdate({ "_id" : mongoose.Types.ObjectId(id)} , user);
-            if(!userUpdated) { return res.status(200).send('Usuário não encontrado')};
-            return res.status(200).send('Usuário atualizado com sucesso!');
+
+            const { userId, currentLang, wishLang, questions, awnsers }  = req.body;
+            const score=this.compareResult(questions,awnsers, wishLang)
+            await Practice.create({
+                    userId,
+                    currentLang,
+                    wishLang,
+                    questions,
+                    awnsers,
+                    score
+            }); 
+            return res.status(200).send({"retorno":score});
         }catch(err) {
             return res.status(500).send(err.message);
         }
@@ -65,8 +79,8 @@ class PracticeController {
     async allMyPractice(req, res) {
         try {
             const { id } = req.params;
-            const all = await User.find(mongoose.Types.ObjectId(id)).lean();
-            if (!all) { return res.status(200).send('Não existe Usuários cadastrados na base')};
+            const all = await Practice.find({userId:id}).lean();
+            if (!all) { return res.status(200).send('Não existe exercícios desse usuário')};
             return res.status(200).send(all);
         }catch(err) {
             return res.status(500).send(err.message);

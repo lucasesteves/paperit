@@ -34,7 +34,7 @@ class UserController {
             const { email, password } = req.body;
             const user = await this.verifyUser(email, password);
             if(!user) { return res.status(200).send({ message : 'Senha ou Email estão errados', user : false})};
-            const token = jwt.sign({ id : user._id, email:user.email }, secret, {
+            const token = jwt.sign({ id : user._id }, secret, {
                 expiresIn : 86400000,
             });
             return res.status(200).send({ user, token });

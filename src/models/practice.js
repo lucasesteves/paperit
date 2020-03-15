@@ -17,9 +17,17 @@ const PracticeSchema=new Schema({
         type:Object,
         require:true
     },
+    awnsers:{
+        type:Object,
+        require:true
+    },
     score:{
         type:Number,
         default:0
+    },
+    status:{
+        type:String,
+        default:'Pronto'
     },
     createdAt:{
         type:Date, 
