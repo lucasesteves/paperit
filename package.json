@@ -4,7 +4,8 @@
   "description": "api from an app to help people learning new language",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
   },
   "author": "Adern.io",
   "license": "ISC",
