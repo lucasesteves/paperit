@@ -8,5 +8,10 @@ router.get('/', async(req,res)=>{
 });
 
 
+router.post('/bank', async(req,res)=>{
+    await WordsController.bank(req,res)
+});
+
+
 
 module.exports = router;

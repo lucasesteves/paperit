@@ -14,6 +14,10 @@ router.post('/login', async(req,res)=>{
     await UserController.sign(req,res)
 });
 
+router.post('/forgot', async(req,res)=>{
+    await UserController.forgotPassword(req,res)
+});
+
 // router.use(authController.verifyToken);
 
 router.get('/all', async(req,res)=>{

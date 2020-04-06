@@ -10,9 +10,9 @@ class UserController {
     async verifyUser(email, password) {
         const user = await User.findOne({email : email});
         if (!user) { return false };
-        if ( await bcrypt.compareSync(password, user.password) ) {
-            return user;
-        }
+        // if ( await bcrypt.compareSync(password, user.password) ) {
+        //     return user;
+        // }
         return false;
     };
 
