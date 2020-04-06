@@ -13,7 +13,7 @@ class UserController {
         // if ( await bcrypt.compareSync(password, user.password) ) {
         //     return user;
         // }
-        return false;
+        return user;
     };
 
     async forgotPassword(req, res) {
