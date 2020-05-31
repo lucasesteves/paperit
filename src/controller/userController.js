@@ -89,8 +89,8 @@ class UserController {
             const user = req.body;
             if (!id) { return res.status(200).send('Não foi passado o Id do usuário'); }
             const userUpdated = await User.findOneAndUpdate({ "_id" : mongoose.Types.ObjectId(id)} , user);
-            if(!userUpdated) { return res.status(200).send('Usuário não encontrado')};
-            return res.status(200).send('Usuário atualizado com sucesso!');
+            if(!userUpdated) { return res.status(200).send({status:false})};
+            return res.status(200).send({status:true});
         }catch(err) {
             return res.status(500).send(err.message);
         }

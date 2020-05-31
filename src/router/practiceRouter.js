@@ -6,24 +6,14 @@ const PracticeController=require('../controller/practiceController');
 
 // router.use(authController.verifyToken);
 
-router.post('/create', async(req,res)=>{
-    await PracticeController.newPractice(req,res)
-});
+router.post('/create', PracticeController.newPractice);
 
-router.get('/mypractices/:id', async(req,res)=>{
-    await PracticeController.allMyPractices(req,res)
-});
+router.get('/mypractices/:id', PracticeController.allMyPractices);
 
-router.get('/:id', async(req,res)=>{
-    await PracticeController.getPractice(req,res)
-});
+router.get('/:id', PracticeController.getPractice);
 
-router.post('/save', async(req,res)=>{
-    await PracticeController.savePractice(req,res)
-});
+router.post('/save', PracticeController.savePractice);
 
-router.delete('/delete/:id', async(req,res)=>{
-    await PracticeController.deletePractice(req,res)
-});
+router.delete('/delete/:id', PracticeController.deletePractice);
 
 module.exports = router;

@@ -5,7 +5,7 @@ const mongoose = require('mongoose');
 
 class PracticeController {
 
-    async getPractice(req, res) {
+    static async getPractice(req, res) {
         try {
             const { id } = req.params;
             const pract = await User.find(mongoose.Types.ObjectId(id));
@@ -16,7 +16,7 @@ class PracticeController {
         }
     };
 
-    async newPractice(req, res) {
+    static async newPractice(req, res) {
         try {
             let { id } = req.body;
             const user = await User.find(mongoose.Types.ObjectId(id));
@@ -35,7 +35,7 @@ class PracticeController {
         }
     };
 
-    compareResult(questions, awnsers, wishLang) {
+    static compareResult(questions, awnsers, wishLang) {
         let score = 0;
         for(let quest in questions) {
            if(questions[quest][wishLang] === awnsers[quest][wishLang]) {
@@ -45,7 +45,7 @@ class PracticeController {
         return score;
      }
 
-    async savePractice(req, res) {
+    static async savePractice(req, res) {
         try {
 
             const { userId, currentLang, wishLang, questions, awnsers }  = req.body;
@@ -64,7 +64,7 @@ class PracticeController {
         }
     };
 
-    async deletePractice(req, res) {
+    static async deletePractice(req, res) {
         try {
             const { id } = req.params;
             if (!id) { return res.status(200).send('Não foi passado o Id do exercício'); };
@@ -76,7 +76,7 @@ class PracticeController {
         }
     };
 
-    async allMyPractice(req, res) {
+    static async allMyPractices(req, res) {
         try {
             const { id } = req.params;
             const all = await Practice.find({userId:id}).lean();
@@ -88,4 +88,4 @@ class PracticeController {
     }
 }
 
-module.exports =  new PracticeController();
+module.exports = PracticeController;

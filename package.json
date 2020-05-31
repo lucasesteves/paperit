@@ -2,7 +2,7 @@
   "name": "paperit_api",
   "version": "1.0.0",
   "description": "api from an app to help people learning new language",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev":"nodemon server.js",
