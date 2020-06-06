@@ -2,9 +2,7 @@ const express = require('express')
 const router = express.Router();
 
 const UserController=require('../controller/userController');
-// const authController = require('../middleware/auth');
-
-
+const authController = require('../middleware/auth');
 
 router.post('/register', async(req,res)=>{
     await UserController.register(req,res)

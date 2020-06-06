@@ -28,20 +28,10 @@ const PracticeSchema=new Schema({
     status:{
         type:String,
         default:'Pronto'
-    },
-    createdAt:{
-        type:Date, 
-        default:Date.now
-    },
-    
+    },    
+},{
+    timestamps: true,
+    collection: 'practice'
 })
-
-PracticeSchema.pre('save',next=>{
-    let now=new Date();
-    if(this.createdAt==null){
-        this.createdAt=now;
-    }
-    next();
-});
 
 module.exports=model('Practice',PracticeSchema)

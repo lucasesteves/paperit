@@ -10,9 +10,9 @@ class UserController {
     async verifyUser(email, password) {
         const user = await User.findOne({email : email});
         if (!user) { return false };
-        // if ( await bcrypt.compareSync(password, user.password) ) {
-        //     return user;
-        // }
+        if ( await bcrypt.compareSync(password, user.password) ) {
+            return user;
+        }
         return user;
     };
 
@@ -56,14 +56,9 @@ class UserController {
 
     async register(req, res) {
         try {
-            let { name, password, email, currentLang, wishLang } = req.body;
+            let { name, email, password, currentLang, wishLang } = req.body;
             const verifyUser = await User.find({ email : email});
             if (verifyUser.length) { return res.status(200).send({message : 'Email já cadastrado no sistema' , user : false})};
-            if(!password) {
-                const newPassword = Math.floor(Math.random() * (9999 - 1111 + 1) + 111111);
-                // await Mail.sendPasswordEmail(newPassword, email);
-                password = newPassword;
-            }
             const user = await User.create({
                     name,
                     email,

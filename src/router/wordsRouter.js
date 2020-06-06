@@ -3,15 +3,8 @@ const router = express.Router();
 
 const WordsController=require('../controller/wordsController');
 
-router.get('/', async(req,res)=>{
-    await WordsController.allWords(req,res)
-});
+router.get('/', WordsController.allWords);
 
-
-router.post('/bank', async(req,res)=>{
-    await WordsController.bank(req,res)
-});
-
-
+router.post('/bank', WordsController.bank);
 
 module.exports = router;

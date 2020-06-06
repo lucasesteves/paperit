@@ -1,9 +1,8 @@
 const Words = require('../models/words');
-const mongoose = require('mongoose');
 
 class WordsController {
 
-    async allWords(req, res) {
+    static async allWords(req, res) {
         try {
             const all = await Words.find().lean();
             return res.status(200).send(all);
@@ -12,7 +11,7 @@ class WordsController {
         }
     }
 
-    async bank(req, res) {
+    static async bank(req, res) {
         try {            
             const all = await Words.aggregate([{$project:obj}]).lean();
             return res.status(200).send(all);
@@ -22,4 +21,4 @@ class WordsController {
     }
 }
 
-module.exports =  new WordsController();
+module.exports = WordsController;

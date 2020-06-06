@@ -8,9 +8,9 @@ class PracticeController {
     static async getPractice(req, res) {
         try {
             const { id } = req.params;
-            const pract = await User.find(mongoose.Types.ObjectId(id));
-            if(!pract){ return res.status(200).send('Não existe esse teste!')};
-            return res.status(200).send({user});
+            const pract = await Practice.find(mongoose.Types.ObjectId(id));
+            if(pract.length==0){ return res.status(200).send({message:'Não existe esse teste!'})};
+            return res.status(200).send({pract});
         }catch(err) {
             return res.status(500).send(err.message);
         }
@@ -35,7 +35,7 @@ class PracticeController {
         }
     };
 
-    static compareResult(questions, awnsers, wishLang) {
+    compareResult(questions, awnsers, wishLang) {
         let score = 0;
         for(let quest in questions) {
            if(questions[quest][wishLang] === awnsers[quest][wishLang]) {
@@ -45,7 +45,7 @@ class PracticeController {
         return score;
      }
 
-    static async savePractice(req, res) {
+    async savePractice(req, res) {
         try {
 
             const { userId, currentLang, wishLang, questions, awnsers }  = req.body;
@@ -58,7 +58,7 @@ class PracticeController {
                     awnsers,
                     score
             }); 
-            return res.status(200).send({"retorno":score});
+            return res.status(200).send({retorno:score});
         }catch(err) {
             return res.status(500).send(err.message);
         }
@@ -67,10 +67,10 @@ class PracticeController {
     static async deletePractice(req, res) {
         try {
             const { id } = req.params;
-            if (!id) { return res.status(200).send('Não foi passado o Id do exercício'); };
+            if (!id) { return res.status(200).send({message:'Não foi passado o Id do exercício'}); };
                 const pract = await Practice.deleteOne({ '_id' : id });
-                if(!pract) { return res.status(200).send('Exercício não encontrado')};
-                return res.status(200).send('Excercício excluido com sucesso!');
+                if(!pract) { return res.status(200).send({message:'Exercício não encontrado'})};
+                return res.status(200).send({message:'Excercício excluido com sucesso!'});
         }catch(err) {
             return res.status(500).send(err.message);
         }
@@ -80,7 +80,7 @@ class PracticeController {
         try {
             const { id } = req.params;
             const all = await Practice.find({userId:id}).lean();
-            if (!all) { return res.status(200).send('Não existe exercícios desse usuário')};
+            if (!all) { return res.status(200).send({message:'Não existe exercícios desse usuário'})};
             return res.status(200).send(all);
         }catch(err) {
             return res.status(500).send(err.message);
