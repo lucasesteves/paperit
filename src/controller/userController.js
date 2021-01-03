@@ -58,7 +58,7 @@ class UserController {
         try {
             let { name, email, password, currentLang, wishLang } = req.body;
             const verifyUser = await User.find({ email : email});
-            if (verifyUser.length) { return res.status(200).send({message : 'Email já cadastrado no sistema' , user : false})};
+            if (verifyUser.length>0) { return res.status(200).send({message : 'Email já cadastrado no sistema' , user : false})};
             const user = await User.create({
                     name,
                     email,

@@ -45,7 +45,7 @@ class PracticeController {
         return score;
      }
 
-    async savePractice(req, res) {
+    static async savePractice(req, res) {
         try {
 
             const { userId, currentLang, wishLang, questions, awnsers }  = req.body;

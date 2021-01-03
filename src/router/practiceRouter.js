@@ -1,8 +1,7 @@
-const express = require('express')
+const express = require('express');
 const router = express.Router();
 
 const PracticeController=require('../controller/practiceController');
-const practice=new PracticeController()
 // const authController = require('../middleware/auth');
 
 // router.use(authController.verifyToken);
@@ -13,7 +12,7 @@ router.get('/mypractices/:id', PracticeController.allMyPractices);
 
 router.get('/:id', PracticeController.getPractice);
 
-router.post('/save', (req,res)=>practice.savePractice(req,res));
+router.post('/save', PracticeController.savePractice);
 
 router.delete('/delete/:id', PracticeController.deletePractice);
 
